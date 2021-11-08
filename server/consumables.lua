@@ -114,6 +114,11 @@ QBCore.Functions.CreateUseableItem("meth", function(source, item)
 end)
 
 ----------- / Tools
+QBCore.Functions.CreateUseableItem("lightarmor", function(source, item)
+    local src = source
+    TriggerClientEvent("consumables:client:UseLightArmor", src)
+end)
+
 
 QBCore.Functions.CreateUseableItem("armor", function(source, item)
     local src = source

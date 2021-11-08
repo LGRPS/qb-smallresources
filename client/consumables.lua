@@ -103,6 +103,22 @@ end)
 --         QBCore.Functions.Notify("You need to have a paracute to activate smoke!", "error")    
 --     end
 -- end)
+RegisterNetEvent('consumables:client:UseLightArmor', function()
+    if GetPedArmour(PlayerPedId()) >= 50 then QBCore.Functions.Notify('You already have enough armor on!', 'error') return end
+    QBCore.Functions.Progressbar("use_armor", "Putting on the body light body armour..", 5000, false, true, {
+        disableMovement = false,
+        disableCarMovement = false,
+		disableMouse = false,
+		disableCombat = true,
+    }, {}, {}, {}, function() -- Done
+        TriggerEvent("inventory:client:ItemBox", QBCore.Shared.Items["lightarmor"], "remove")
+        TriggerServerEvent('hospital:server:SetArmor', 50)
+        TriggerServerEvent("QBCore:Server:RemoveItem", "lightarmor", 1)
+        SetPedArmour(PlayerPedId(), 50)
+    end)
+end)
+
+
 
 RegisterNetEvent('consumables:client:UseArmor', function()
     if GetPedArmour(PlayerPedId()) >= 75 then QBCore.Functions.Notify('You already have enough armor on!', 'error') return end
@@ -146,6 +162,7 @@ RegisterNetEvent('consumables:client:UseHeavyArmor', function()
             SetPedComponentVariation(ped, 9, 30, 0, 2)
         end
         TriggerEvent("inventory:client:ItemBox", QBCore.Shared.Items["heavyarmor"], "remove")
+        TriggerServerEvent('hospital:server:SetArmor', 100)
         TriggerServerEvent("QBCore:Server:RemoveItem", "heavyarmor", 1)
         SetPedArmour(ped, 100)
     end)
