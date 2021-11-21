@@ -93,48 +93,6 @@ RegisterNetEvent('consumables:client:ResetParachute', function()
     end
 end)
 
--- RegisterNetEvent('consumables:client:UseRedSmoke', function()
---     if ParachuteEquiped then
---         local ped = PlayerPedId()
---         SetPlayerParachuteSmokeTrailColor(ped, 255, 0, 0)
---         SetPlayerCanLeaveParachuteSmokeTrail(ped, true)
---         TriggerEvent("inventory:client:Itembox", QBCore.Shared.Items["smoketrailred"], "remove")
---     else
---         QBCore.Functions.Notify("You need to have a paracute to activate smoke!", "error")    
---     end
--- end)
-RegisterNetEvent('consumables:client:UseLightArmor', function()
-    if GetPedArmour(PlayerPedId()) >= 50 then QBCore.Functions.Notify('You already have enough armor on!', 'error') return end
-    local ped = PlayerPedId()
-    local PlayerData = QBCore.Functions.GetPlayerData()
-    QBCore.Functions.Progressbar("use_armor", "Putting on the light body armour..", 5000, false, true, {
-        disableMovement = false,
-        disableCarMovement = false,
-		disableMouse = false,
-		disableCombat = true,
-    }, {}, {}, {}, function() -- Done
-        if PlayerData.charinfo.gender == 0 then
-            currentVest = GetPedDrawableVariation(ped, 9)
-            currentVestTexture = GetPedTextureVariation(ped, 9)
-            if GetPedDrawableVariation(ped, 9) == 7 then
-                SetPedComponentVariation(ped, 9, 19, GetPedTextureVariation(ped, 9), 2)
-            else
-                SetPedComponentVariation(ped, 9, 6, 1, 2) -- Black
-            end
-        else
-            currentVest = GetPedDrawableVariation(ped, 30)
-            currentVestTexture = GetPedTextureVariation(ped, 30)
-            SetPedComponentVariation(ped, 9, 30, 0, 2)
-        end
-        TriggerEvent("inventory:client:ItemBox", QBCore.Shared.Items["lightarmor"], "remove")
-        TriggerServerEvent('hospital:server:SetArmor', 50)
-        TriggerServerEvent("QBCore:Server:RemoveItem", "lightarmor", 1)
-        SetPedArmour(PlayerPedId(), 50)
-    end)
-end)
-
-
-
 RegisterNetEvent('consumables:client:UseArmor', function()
     if GetPedArmour(PlayerPedId()) >= 75 then QBCore.Functions.Notify('You already have enough armor on!', 'error') return end
     local ped = PlayerPedId()
@@ -531,3 +489,33 @@ function AlienEffect()
     StopScreenEffect("DrugsMichaelAliensFight")
     StopScreenEffect("DrugsMichaelAliensFightOut")
 end
+
+RegisterNetEvent('consumables:client:UseLightArmor', function()
+    if GetPedArmour(PlayerPedId()) >= 50 then QBCore.Functions.Notify('You already have enough armor on!', 'error') return end
+    local ped = PlayerPedId()
+    local PlayerData = QBCore.Functions.GetPlayerData()
+    QBCore.Functions.Progressbar("use_armor", "Putting on the light body armour..", 5000, false, true, {
+        disableMovement = false,
+        disableCarMovement = false,
+		disableMouse = false,
+		disableCombat = true,
+    }, {}, {}, {}, function() -- Done
+        if PlayerData.charinfo.gender == 0 then
+            currentVest = GetPedDrawableVariation(ped, 9)
+            currentVestTexture = GetPedTextureVariation(ped, 9)
+            if GetPedDrawableVariation(ped, 9) == 7 then
+                SetPedComponentVariation(ped, 9, 19, GetPedTextureVariation(ped, 9), 2)
+            else
+                SetPedComponentVariation(ped, 9, 6, 1, 2) -- Black
+            end
+        else
+            currentVest = GetPedDrawableVariation(ped, 30)
+            currentVestTexture = GetPedTextureVariation(ped, 30)
+            SetPedComponentVariation(ped, 9, 30, 0, 2)
+        end
+        TriggerEvent("inventory:client:ItemBox", QBCore.Shared.Items["lightarmor"], "remove")
+        TriggerServerEvent('hospital:server:SetArmor', 50)
+        TriggerServerEvent("QBCore:Server:RemoveItem", "lightarmor", 1)
+        SetPedArmour(PlayerPedId(), 50)
+    end)
+end)
