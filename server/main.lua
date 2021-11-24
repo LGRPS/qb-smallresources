@@ -63,3 +63,10 @@ QBCore.Functions.CreateCallback('smallresources:server:GetCurrentPlayers', funct
     end
     cb(TotalPlayers)
 end)
+
+--Minigames
+RegisterNetEvent('3dme:shareDisplay', function(text)
+	TriggerClientEvent('3dme:triggerDisplay', -1, text, source)
+	local name = GetPlayerName(source)
+	TriggerEvent('me:logging', source, name, text)
+end)
